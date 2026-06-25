@@ -1,0 +1,6 @@
+{
+  "name": "الأمين لجوالات",
+  "description": "نظام محاسبة ومستودعات متكامل لإدارة محلات الهواتف المحمولة والصيانة، مستوحى من نظام الأمين للمحاسبة والمستودعات.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

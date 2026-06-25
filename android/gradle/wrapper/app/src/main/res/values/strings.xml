@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">الأمين لجوالات</string>
+    <string name="title_activity_main">الأمين لجوالات</string>
+    <string name="package_name">com.ameen.mobile.app</string>
+    <string name="custom_url_scheme">com.ameen.mobile.app</string>
+</resources>

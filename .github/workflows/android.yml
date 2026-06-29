@@ -1,4 +1,4 @@
-name: Build Android APK
+name: Scan and Build Project
 
 on:
   push:
@@ -8,53 +8,31 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout Source Code
+    - name: Checkout Code
       uses: actions/checkout@v4
 
-    - name: Obliterate Corrupted Local Wrapper
-      run: |
-        rm -rf android/gradle/wrapper
-        rm -f android/gradlew
-        rm -f android/gradlew.bat
-
-    - name: Set up Node.js
+    - name: Set up Environment
       uses: actions/setup-node@v4
       with:
         node-version: 22
-        cache: 'npm'
-
-    - name: Install Dependencies
-      run: npm install
-
-    - name: Build Web App
-      run: npm run build
-
-    - name: Sync with Capacitor
-      run: npx cap sync android
-
-    - name: Set up JDK 21
+    - name: Set up Java
       uses: actions/setup-java@v4
       with:
         distribution: 'zulu'
         java-version: '21'
 
-    - name: Setup Android SDK
-      uses: android-actions/setup-android@v3
-
-    - name: Inject Clean Gradle 8.13
-      uses: gradle/actions/setup-gradle@v4
-      with:
-        gradle-version: 8.13
-
-    - name: Build APK (Debug)
+    - name: Build Project
       run: |
+        npm install
+        npm run build
+        npx cap sync android
         cd android
-        gradle assembleDebug
+        ./gradlew assembleDebug
 
-    - name: Upload APK Artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: My-Capacitor-App
-        path: android/app/build/outputs/apk/debug/app-debug.apk
+    - name: FAILED_SEARCH_SCAN
+      run: |
+        echo "--- جاري فحص مكان ملفات APK ---"
+        find android/app/build/outputs/ -name "*.apk"
+        echo "--- هيكلة المجلدات ---"
+        ls -R android/app/build/outputs/

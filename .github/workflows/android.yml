@@ -53,14 +53,8 @@ jobs:
         cd android
         gradle assembleDebug
 
-    - name: Locate APK File
-      run: |
-        echo "--- جاري البحث عن الملف ---"
-        find . -name "*.apk"
-        echo "--- انتهى البحث ---"
-
     - name: Upload APK Artifact
       uses: actions/upload-artifact@v4
       with:
         name: My-Capacitor-App
-        path: android/app/build/outputs/apk/debug/app-debug.apk
+        path: '**/*.apk'

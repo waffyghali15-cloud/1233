@@ -37,12 +37,15 @@ jobs:
     - name: Setup Android SDK
       uses: android-actions/setup-android@v3
 
+    - name: Inject Clean Gradle 8.7 (Bypass Broken Local Files)
+      uses: gradle/actions/setup-gradle@v4
+      with:
+        gradle-version: 8.7
+
     - name: Build APK (Debug)
       run: |
         cd android
-        gradle wrapper --gradle-version 8.7
-        chmod +x gradlew
-        ./gradlew assembleDebug
+        gradle assembleDebug
 
     - name: Upload APK Artifact
       uses: actions/upload-artifact@v4

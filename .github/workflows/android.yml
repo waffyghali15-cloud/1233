@@ -12,11 +12,13 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v4
 
-    - name: Set up Node and Java
+    - name: Set up Environment
       uses: actions/setup-node@v4
       with:
         node-version: 22
-    - uses: actions/setup-java@v4
+
+    - name: Set up Java
+      uses: actions/setup-java@v4
       with:
         distribution: 'zulu'
         java-version: '21'
@@ -26,7 +28,10 @@ jobs:
         npm install
         npm run build
         npx cap sync android
+        # التصحيح الجذري للخطأ 126 (Permission Denied)
         cd android
+        rm -rf gradle/wrapper
+        gradle wrapper --gradle-version 8.13
         chmod +x gradlew
         ./gradlew assembleDebug
 

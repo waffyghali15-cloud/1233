@@ -13,6 +13,12 @@ jobs:
     - name: Checkout Source Code
       uses: actions/checkout@v4
 
+    - name: Obliterate Corrupted Local Wrapper
+      run: |
+        rm -rf android/gradle/wrapper
+        rm -f android/gradlew
+        rm -f android/gradlew.bat
+
     - name: Set up Node.js
       uses: actions/setup-node@v4
       with:
@@ -37,7 +43,7 @@ jobs:
     - name: Setup Android SDK
       uses: android-actions/setup-android@v3
 
-    - name: Inject Clean Gradle 8.7 (Bypass Broken Local Files)
+    - name: Inject Clean Gradle 8.7
       uses: gradle/actions/setup-gradle@v4
       with:
         gradle-version: 8.7

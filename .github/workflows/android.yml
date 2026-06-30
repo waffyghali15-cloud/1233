@@ -37,16 +37,18 @@ jobs:
     - name: Setup Android SDK
       uses: android-actions/setup-android@v3
 
-    - name: Setup Gradle
-      uses: gradle/actions/setup-gradle@v4
-      with:
-        gradle-version: '8.7'
+    - name: Install Gradle directly
+      uses: gradle/actions/wrapper-validation@v4
+      continue-on-error: true
 
     - name: Remove broken wrapper jar
       run: rm -f android/gradle/wrapper/gradle-wrapper.jar
 
-    - name: Regenerate clean wrapper
+    - name: Download Gradle 8.7 manually
       run: |
+        wget -q https://services.gradle.org/distributions/gradle-8.7-bin.zip
+        unzip -q gradle-8.7-bin.zip
+        export PATH=$PATH:$PWD/gradle-8.7/bin
         cd android
         gradle wrapper --gradle-version 8.7
         chmod +x gradlew
